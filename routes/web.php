@@ -15,6 +15,9 @@ Route::get('/', function(){
     return redirect()->route('books.index');
 });
 
+Route::group(['prefix' => 'api'], function(){
+    Route::get('get-books','BooksController@getBooks');
+});
 
 //books
 Route::group(['prefix' => 'books'], function(){

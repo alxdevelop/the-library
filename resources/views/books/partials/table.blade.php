@@ -1,3 +1,4 @@
+<span v-if="!books">There aren't books</span>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -9,7 +10,21 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($books as $book)
+        <tr v-for="book in filteredBooks">
+            <td>@{{ book.id }}</td>
+            <td>@{{ book.name }}</td>
+            <td>@{{ book.category.name }}</td>
+            <td>
+                <span v-if="book.user" class="label label-danger">Unavailable</span>
+                <span v-if="!book.user" class="label label-success">Available</span>
+            </td>
+            <td>
+                <a href="javascript:void(0);" class="btn btn-xs btn-primary">Editar</a>
+                <a href="javascript:void(0);" @click="validateDelete('book.id')" class="btn btn-xs btn-danger">Delete</a>
+                <a href="javascript:void(0);" @click="showModal('@{{ book.id }}')" class="btn btn-xs btn-info">To borrow</a>
+            </td>
+        </tr>
+        {{-- @foreach($books as $book)
             <tr>
                 <td>{{ $book->id }}</td>
                 <td><a href="{{ route('books.show', [$book->id]) }}">{{ $book->name }}</a></td>
@@ -28,6 +43,6 @@
                     {!! Form::close() !!}
                 </td>
             </tr>
-        @endforeach
+        @endforeach --}}
     </tbody>
 </table>

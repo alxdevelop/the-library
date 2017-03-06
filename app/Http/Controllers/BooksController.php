@@ -19,22 +19,15 @@ class BooksController extends Controller
      * The home
      **/
     public function index(Request $request){
-
-        if($request->has('q')){
-            $books = Book::where('name', 'LIKE','%'.$request->get('q').'%')
-                ->orWhere('author', 'LIKE','%'.$request->get('q').'%')->paginate($this->paginate);
-            $books->withPath('?q='.$request->get('q'));
-        }else {
-            //get all books with paginate
-            $books = Book::paginate($this->paginate);
-        }
-
-        //categories
-        $categories = Category::all();
-
-        return view('books.index', compact('books','categories'));
+        return view('books.index');
     }
 
+
+    public function getBooks()
+    {
+        $books = Book::with('category')->get();
+        return response()->json($books);
+    }
 
     /**
      * Show the create form

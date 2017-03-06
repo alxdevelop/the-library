@@ -20,3 +20,4 @@ require('./bootstrap');
 // });
 
 require('./deleteItem');
+require('./book');
